@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './FamousSection.css';
 import axios from 'axios';
+import FamousPersonForm from '../FamousPersonForm/FamousPersonForm';
 
 function FamousSection() {
   let [famousPersonName, setPersonName] = useState('');
   let [famousPersonRole, setPersonRole] = useState('');
-  let [personInput, setPersonInput] = useState('');
-  let [roleInput, setRoleInput] = useState('');
+
   let [famousPeopleArray, setPeopleArray] = useState([]);
 
   // TODO: on load, call the fetchPeople() function
@@ -32,43 +32,10 @@ function FamousSection() {
       })
   }
 
-  const addPerson = (evt) => {
-    evt.preventDefault();
-    console.log(`The person is ${famousPersonName} and they're famous for ${famousPersonRole}`);
-    setPersonName(personInput);
-    setPersonRole(roleInput);
-    // TODO: create POST request to add this new person to the database
-    axios({
-      method: 'POST',
-      url: '/people',
-      data: {name: personInput, role: roleInput}
-    }).then((response) => {
-      fetchPeople();
-      setPersonInput('');
-      setRoleInput('');
-    })
-    // HINT: the server is expecting a person object 
-    //       with a `name` and a `role` property
   
-  }
-
     return (
       <section className="new-person-section">
-        <form onSubmit={addPerson}>
-          <label htmlFor="name-input">Name:</label>
-          <input 
-          id="name-input"
-          onChange={e => setPersonInput(e.target.value)} 
-          value={personInput}
-          />
-          <label htmlFor="role-input">Famous for:</label>
-          <input 
-          id="role-input"
-          onChange={e => setRoleInput(e.target.value)}
-          value={roleInput}
-          />
-          <button type="submit">Done</button>
-        </form>
+       <FamousPersonForm />
         <p>
           {famousPersonName} is famous for "{famousPersonRole}".
         </p>
